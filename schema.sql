@@ -35,3 +35,30 @@ ALTER TABLE animals ADD COLUMN species_id INT REFERENCES species (id);
 
 /* Add owners_id in animals table referenced from owners table */
 ALTER TABLE animals ADD COLUMN owners_id INT REFERENCES owners (id);
+
+
+/* JoinTable*/
+/* Create vets table */
+CREATE TABLE vets (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    date_of_graduation DATE
+);
+
+/* Create join/bridge table specializations */
+CREATE TABLE specializations (
+    vets_id INT NOT NULL,
+    species_id INT NOT NULL,
+    FOREIGN KEY (vets_id) REFERENCES vets (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (species_id) REFERENCES species (id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+/* Create join/bridge table visits */
+CREATE TABLE visits (
+    vets_id INT NOT NULL,
+    animals_id INT NOT NULL,
+    date_of_visit DATE,
+    FOREIGN KEY (vets_id) REFERENCES vets (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (animals_id) REFERENCES animals (id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
