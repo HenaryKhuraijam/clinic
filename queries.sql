@@ -12,24 +12,34 @@ SELECT * from animals WHERE weight_kg >= 10.5 AND weight_kg <= 17.3;
 
 BEGIN;
 UPDATE animals SET species = 'unspecified';
+SELECT species from animals;
 ROLLBACK;
+SELECT species from animals;
 
 BEGIN;
 UPDATE animals SET species = 'digimon' WHERE name like '%mon%';
 UPDATE animals SET species = 'pokemon' WHERE species IS NULL;
+SELECT * from animals;
 COMMIT;
+SELECT * from animals;
 
 BEGIN;
 DELETE FROM animals;
+SELECT * from animals;
 ROLLBACK;
+SELECT * from animals;
 
 BEGIN;
 DELETE FROM animals WHERE date_of_birth > '2022-1-1';
 SAVEPOINT SP1;
 UPDATE animals SET weight_kg = weight_kg * -1;
+SELECT * from animals;
 ROLLBACK TO SP1;
+SELECT * from animals;
 UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
+SELECT * from animals;
 COMMIT;
+SELECT * from animals;
 
 SELECT COUNT(name) from animals;
 SELECT COUNT(name) from animals WHERE escape_attempts = 0;
