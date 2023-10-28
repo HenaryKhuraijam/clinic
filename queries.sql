@@ -19,19 +19,27 @@ SELECT species from animals; -- verify that change was undone
 BEGIN;
 UPDATE animals SET species = 'digimon' WHERE name like '%mon%';
 UPDATE animals SET species = 'pokemon' WHERE species IS NULL;
+SELECT * FROM animals;
 COMMIT;
+SELECT * FROM animals;
 
 BEGIN;
 DELETE FROM animals;
+SELECT * FROM animals;
 ROLLBACK;
+SELECT * FROM animals;
 
 BEGIN;
 DELETE FROM animals WHERE date_of_birth > '2022-1-1';
 SAVEPOINT SP1;
 UPDATE animals SET weight_kg = weight_kg * -1;
+SELECT * FROM animals;
 ROLLBACK TO SP1;
+SELECT * FROM animals;
 UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
+SELECT * FROM animals;
 COMMIT;
+SELECT * FROM animals;
 
 SELECT COUNT(name) from animals;
 SELECT COUNT(name) from animals WHERE escape_attempts = 0;
